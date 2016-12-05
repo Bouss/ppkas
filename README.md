@@ -7,4 +7,4 @@ Here is the subject (in French) : "Militant activiste du Partie pour la Préserv
 ## Technologies
 
 The project is an Android project  
-The data are stored in both in a MySQL database (distant) and a SQLite database (embedded)
+The data are stored both in a MySQL database (distant) and a SQLite database (embedded)
