@@ -1,16 +1,33 @@
 package com.tp1.bousseaud.ppkas.model;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
+import com.tp1.bousseaud.ppkas.utils.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
+import java.util.List;
 
-public class News {
+@Table(name = "News")
+public class News extends Model {
 
-    private long id;
+    @Column(name = "Title")
     private String title;
+    @Column(name = "Description")
     private String description;
+    @Column(name = "Place")
     private String place;
+    @Column(name = "CreatedAt")
     private Date createdAt;
+    @Column(name = "UpdatedAt")
     private Date updatedAt;
+    @Column(name = "Picture")
     private String picture;
+    @Column(name = "Thematic")
     private String thematic;
 
     public static final String THEMATIC_ANIMAL_PRESERVATION = "animal_preservation";
@@ -26,11 +43,11 @@ public class News {
     };
 
     public News() {
-
+        super();
     }
 
-    public News(long id, String title, String description, String place, Date createdAt, Date updatedAt, String picture, String thematic) {
-        this.id = id;
+    public News(String title, String description, String place, Date createdAt, Date updatedAt, String picture, String thematic) {
+        super();
         this.title = title;
         this.description = description;
         this.place = place;
@@ -40,12 +57,29 @@ public class News {
         this.thematic = thematic;
     }
 
-    public long getId() {
-        return id;
+    public static News JSONObjectToNews(JSONObject o) {
+        News news = new News();
+
+        try {
+            news.setTitle(o.getString("title"));
+            news.setDescription(o.getString("description"));
+            news.setPlace(null);
+            news.setCreatedAt(Utils.stringToDate(o.getString("publishedAt"), Utils.DATE_FORMAT));
+            news.setUpdatedAt(null);
+            news.setPicture(o.getString("urlToImage"));
+            news.setThematic(null);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return news;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public static List<News> getAll() {
+        return new Select()
+                .from(News.class)
+                .orderBy("CreatedAt DESC")
+                .execute();
     }
 
     public String getTitle() {

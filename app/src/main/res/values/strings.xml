@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">PPKAS</string>
-    <array-string>
+    <string-array name="categories">
         <item>Préservation des animaux</item>
         <item>Réchauffement climatique</item>
         <item>Malnutrition dans le monde</item>
-        <item>Agenda culturel de l'association</item>
-    </array-string>
+        <item>Agenda culturel de l\'association</item>
+    </string-array>
 </resources>
