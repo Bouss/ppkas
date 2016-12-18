@@ -1,4 +1,4 @@
-package com.tp1.bousseaud.ppkas.utils;
+package com.tp1.bousseaud.ppkas.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class Utils {
+public final class Util {
 
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 

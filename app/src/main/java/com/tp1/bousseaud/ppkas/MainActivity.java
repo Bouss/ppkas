@@ -1,11 +1,11 @@
 package com.tp1.bousseaud.ppkas;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.tp1.bousseaud.ppkas.model.News;
-import com.tp1.bousseaud.ppkas.utils.Utils;
+import com.tp1.bousseaud.ppkas.util.Util;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,6 +13,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -26,8 +28,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        String apiKey = Utils.readTextFileFromAssets("api_key_news_api.txt", this);
+        String apiKey = Util.readTextFileFromAssets("api_key_news_api.txt", this);
 
         OkHttpClient client = new OkHttpClient();
 
@@ -55,16 +58,19 @@ public class MainActivity extends Activity {
 
                     for (int i=0; i < articles.length(); i++) {
                         article = articles.getJSONObject(i);
+                        // Save news from "News API" to the database
                         News.JSONObjectToNews(article).save();
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
 
-        // Test retrieve the news from the database
-        Log.v("LOG", News.getAll().toString());
+    @OnClick(R.id.btn_view_all_news)
+    public void viewAllNews() {
+        Intent intent = new Intent(this, NewsListActivity.class);
+        startActivity(intent);
     }
 }

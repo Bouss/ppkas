@@ -4,7 +4,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
-import com.tp1.bousseaud.ppkas.utils.Utils;
+import com.tp1.bousseaud.ppkas.util.Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,7 +64,7 @@ public class News extends Model {
             news.setTitle(o.getString("title"));
             news.setDescription(o.getString("description"));
             news.setPlace(null);
-            news.setCreatedAt(Utils.stringToDate(o.getString("publishedAt"), Utils.DATE_FORMAT));
+            news.setCreatedAt(Util.stringToDate(o.getString("publishedAt"), Util.DATE_FORMAT));
             news.setUpdatedAt(null);
             news.setPicture(o.getString("urlToImage"));
             news.setThematic(null);
