@@ -2,6 +2,7 @@
     <string name="app_name">PPKAS</string>
     <string name="btn_view_all_news">Voir toutes les news</string>
     <string-array name="categories">
+        <item>Autre</item>
         <item>Préservation des animaux</item>
         <item>Réchauffement climatique</item>
         <item>Malnutrition dans le monde</item>

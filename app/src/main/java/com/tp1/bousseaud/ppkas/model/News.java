@@ -15,7 +15,22 @@ import java.util.List;
 @Table(name = "News")
 public class News extends Model {
 
-    @Column(name = "Title")
+    public static final int THEMATIC_OTHER = 0;
+    public static final int THEMATIC_ANIMAL_PRESERVATION = 1;
+    public static final int THEMATIC_CLIMATIC_WARMING = 2;
+    public static final int THEMATIC_WORLD_MALNUTRITION = 3;
+    public static final int THEMATIC_PLANNING = 4;
+
+    public static final int[] THEMATICS = {
+            THEMATIC_OTHER,
+            THEMATIC_ANIMAL_PRESERVATION,
+            THEMATIC_CLIMATIC_WARMING,
+            THEMATIC_WORLD_MALNUTRITION,
+            THEMATIC_PLANNING
+    };
+
+    // (Temporary) Because the news of "News API" don't have any ID, set "title" as the primary key
+    @Column(name = "Title", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private String title;
     @Column(name = "Description")
     private String description;
@@ -28,25 +43,13 @@ public class News extends Model {
     @Column(name = "Picture")
     private String picture;
     @Column(name = "Thematic")
-    private String thematic;
-
-    public static final String THEMATIC_ANIMAL_PRESERVATION = "animal_preservation";
-    public static final String THEMATIC_CLIMATIC_WARMING = "climatic_warming";
-    public static final String THEMATIC_WORLD_MALNUTRITION = "world_malnutrition";
-    public static final String THEMATIC_PLANNING = "planning";
-
-    public static final String[] THEMATICS = {
-            THEMATIC_ANIMAL_PRESERVATION,
-            THEMATIC_CLIMATIC_WARMING,
-            THEMATIC_WORLD_MALNUTRITION,
-            THEMATIC_PLANNING
-    };
+    private int thematic;
 
     public News() {
         super();
     }
 
-    public News(String title, String description, String place, Date createdAt, Date updatedAt, String picture, String thematic) {
+    public News(String title, String description, String place, Date createdAt, Date updatedAt, String picture, int thematic) {
         super();
         this.title = title;
         this.description = description;
@@ -67,7 +70,7 @@ public class News extends Model {
             news.setCreatedAt(Util.stringToDate(o.getString("publishedAt"), Util.DATE_FORMAT));
             news.setUpdatedAt(null);
             news.setPicture(o.getString("urlToImage"));
-            news.setThematic(null);
+            news.setThematic(0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -78,6 +81,14 @@ public class News extends Model {
     public static List<News> getAll() {
         return new Select()
                 .from(News.class)
+                .orderBy("CreatedAt DESC")
+                .execute();
+    }
+
+    public static List<News> getByThematic(int thematic) {
+        return new Select()
+                .from(News.class)
+                .where("Thematic = ? ", thematic)
                 .orderBy("CreatedAt DESC")
                 .execute();
     }
@@ -130,11 +141,11 @@ public class News extends Model {
         this.picture = picture;
     }
 
-    public String getThematic() {
+    public int getThematic() {
         return thematic;
     }
 
-    public void setThematic(String thematic) {
+    public void setThematic(int thematic) {
         this.thematic = thematic;
     }
 }

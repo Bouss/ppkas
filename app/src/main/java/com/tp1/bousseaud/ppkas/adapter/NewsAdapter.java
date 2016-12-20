@@ -1,6 +1,7 @@
 package com.tp1.bousseaud.ppkas.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
         News news = getItem(position);
 
+        // Load the picture of the news from its URL
         Picasso.with(getContext()).load(news.getPicture()).into(holder.thumbnail);
         holder.title.setText(news.getTitle());
 

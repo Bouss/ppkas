@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://newsapi.org/v1/articles").newBuilder();
-        urlBuilder.addQueryParameter("source", "techcrunch");
+        urlBuilder.addQueryParameter("source", "cnn");
         urlBuilder.addQueryParameter("apiKey", apiKey);
         String url = urlBuilder.build().toString();
 
